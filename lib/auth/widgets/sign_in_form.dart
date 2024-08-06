@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:ustudy_app/auth/cubit/auth_cubit.dart';
 import 'package:ustudy_app/services/utils.dart';
+
+enum Occupation { pupil, student, parent, teacher }
 
 class SignInForm extends StatefulWidget {
   const SignInForm({super.key});
@@ -11,16 +15,24 @@ class SignInForm extends StatefulWidget {
 class _SignInFormState extends State<SignInForm> {
   final _form = GlobalKey<FormState>();
   // Initial Selected Value
-  String dropdownvalue = '';
-
-  // List of items in our dropdown menu
-  var items = [
-    '',
-    'Школьник',
-    'Студент',
-    'Родитель',
-    'Учитель',
-  ];
+  var _dropdownValue = Occupation.pupil;
+  var _enteredPhone = '';
+  var _enteredName = '';
+  var _enteredEmail = '';
+  var _enteredPassword = '';
+  void _submit() {
+    final isValid = _form.currentState!.validate();
+    if (!isValid) {
+      return;
+    }
+    _form.currentState!.save();
+    BlocProvider.of<AuthCubit>(context).signIn(
+        phoneNumber: _enteredPhone,
+        password: _enteredPassword,
+        emailAddress: _enteredEmail,
+        name: _enteredName,
+        occupation: _dropdownValue);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +59,9 @@ class _SignInFormState extends State<SignInForm> {
                 }
                 return null;
               },
-              onSaved: (value) {},
+              onSaved: (value) {
+                _enteredName = value!;
+              },
             ),
             Text(
               "Номер телефона",
@@ -69,7 +83,9 @@ class _SignInFormState extends State<SignInForm> {
                 }
                 return null;
               },
-              onSaved: (value) {},
+              onSaved: (value) {
+                _enteredPhone = value!;
+              },
             ),
             Text(
               "Email",
@@ -91,7 +107,9 @@ class _SignInFormState extends State<SignInForm> {
                 }
                 return null;
               },
-              onSaved: (value) {},
+              onSaved: (value) {
+                _enteredEmail = value!;
+              },
             ),
             Text(
               "Выберите",
@@ -101,19 +119,20 @@ class _SignInFormState extends State<SignInForm> {
               decoration: InputDecoration(
                 border: customOutileBorder,
               ),
-              value: dropdownvalue,
-              items: items.map((String items) {
-                return DropdownMenuItem(
-                  value: items,
-                  child: Text(items),
-                );
-              }).toList(),
+              value: _dropdownValue,
+              items: Occupation.values.map(
+                (var occupationItem) {
+                  return DropdownMenuItem(
+                    value: occupationItem,
+                    child: Text(occupationItem.name),
+                  );
+                },
+              ).toList(),
               onChanged: (value) {
                 setState(() {
-                  dropdownvalue = value!;
+                  _dropdownValue = value!;
                 });
               },
-              onSaved: (value) {},
             ),
             Text(
               "Пароль",
@@ -131,7 +150,9 @@ class _SignInFormState extends State<SignInForm> {
                 labelText: 'Введите пароль',
               ),
               obscureText: true,
-              onSaved: (value) {},
+              onSaved: (value) {
+                _enteredPassword = value!;
+              },
             ),
             Text(
               "Повторите пароль",
@@ -139,8 +160,8 @@ class _SignInFormState extends State<SignInForm> {
             ),
             TextFormField(
               validator: (value) {
-                if (value == null || value.trim().length < 6) {
-                  return 'Пароль должен быть длиннее 6 символов';
+                if (value != _enteredPassword) {
+                  return 'Пароли должны совподать';
                 }
                 return null;
               },
@@ -149,12 +170,11 @@ class _SignInFormState extends State<SignInForm> {
                 labelText: 'Введите пароль',
               ),
               obscureText: true,
-              onSaved: (value) {},
             ),
             const SizedBox(height: 30),
             Center(
                 child: TextButton(
-                    onPressed: () {},
+                    onPressed: _submit,
                     child: Text(
                       "Зарегестрироваться",
                       style: Theme.of(context).textTheme.titleMedium,

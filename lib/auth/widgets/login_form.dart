@@ -12,6 +12,18 @@ class LoginForm extends StatefulWidget {
 
 class _LoginFormState extends State<LoginForm> {
   final _form = GlobalKey<FormState>();
+  var _enteredPhone = '';
+  var _enteredPassword = '';
+  void _submit() {
+    final isValid = _form.currentState!.validate();
+    if (!isValid) {
+      return;
+    }
+    _form.currentState!.save();
+    BlocProvider.of<AuthCubit>(context)
+        .logIn(phoneNumber: _enteredPhone, password: _enteredPassword);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -40,7 +52,9 @@ class _LoginFormState extends State<LoginForm> {
                 }
                 return null;
               },
-              onSaved: (value) {},
+              onSaved: (value) {
+                _enteredPhone = value!;
+              },
             ),
             Text(
               "Пароль",
@@ -58,12 +72,14 @@ class _LoginFormState extends State<LoginForm> {
                 labelText: 'Введите пароль',
               ),
               obscureText: true,
-              onSaved: (value) {},
+              onSaved: (value) {
+                _enteredPassword = value!;
+              },
             ),
             const SizedBox(height: 30),
             Center(
                 child: TextButton(
-                    onPressed: () {},
+                    onPressed: _submit,
                     child: Text(
                       "Войти",
                       style: Theme.of(context).textTheme.titleMedium,
