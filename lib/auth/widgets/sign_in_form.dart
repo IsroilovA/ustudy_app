@@ -27,6 +27,7 @@ class _SignInFormState extends State<SignInForm> {
     }
     _form.currentState!.save();
     BlocProvider.of<AuthCubit>(context).signIn(
+        context: context,
         phoneNumber: _enteredPhone,
         password: _enteredPassword,
         emailAddress: _enteredEmail,
@@ -122,9 +123,20 @@ class _SignInFormState extends State<SignInForm> {
               value: _dropdownValue,
               items: Occupation.values.map(
                 (var occupationItem) {
+                  String occulationLabel;
+                  switch (occupationItem) {
+                    case Occupation.pupil:
+                      occulationLabel = "Школьник";
+                    case Occupation.student:
+                      occulationLabel = "Студент";
+                    case Occupation.parent:
+                      occulationLabel = "Родитель";
+                    case Occupation.teacher:
+                      occulationLabel = "Учитель";
+                  }
                   return DropdownMenuItem(
                     value: occupationItem,
-                    child: Text(occupationItem.name),
+                    child: Text(occulationLabel),
                   );
                 },
               ).toList(),
@@ -181,7 +193,9 @@ class _SignInFormState extends State<SignInForm> {
                     onPressed: _submit,
                     child: Text(
                       "Продолжить",
-                      style: Theme.of(context).textTheme.titleMedium,
+                      style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                            fontSize: 20,
+                          ),
                     ))),
           ],
         ));

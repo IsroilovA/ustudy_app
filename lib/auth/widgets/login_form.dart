@@ -82,7 +82,9 @@ class _LoginFormState extends State<LoginForm> {
                     onPressed: _submit,
                     child: Text(
                       "Войти",
-                      style: Theme.of(context).textTheme.titleMedium,
+                      style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                            fontSize: 20,
+                          ),
                     ))),
             const SizedBox(height: 15),
             Row(

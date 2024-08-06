@@ -38,7 +38,7 @@ class App extends StatelessWidget {
       darkTheme: darkTheme, // Applying the dark theme
       home: BlocProvider(
         create: (context) => AuthCubit(),
-        child: const AuthScreen(),
+        child: const AuthScreen()
       ),
     );
   }

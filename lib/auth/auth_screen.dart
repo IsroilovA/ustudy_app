@@ -27,7 +27,7 @@ class _AuthScreenState extends State<AuthScreen> {
               child: Stack(
                 alignment: Alignment.topCenter,
                 children: [
-                  Image.asset('assets/images/login_image.jpg'),
+                  Image.asset('assets/images/login_image.png'),
                   Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
