@@ -180,7 +180,7 @@ class _SignInFormState extends State<SignInForm> {
                 child: TextButton(
                     onPressed: _submit,
                     child: Text(
-                      "Зарегестрироваться",
+                      "Продолжить",
                       style: Theme.of(context).textTheme.titleMedium,
                     ))),
           ],
