@@ -9,9 +9,9 @@ class AuthCubit extends Cubit<AuthState> {
 
   void changeMod() {
     if (state is AuthSighIn) {
-      emit(AuthLogin());
+      emit(const AuthLogin());
     } else if (state is AuthLogin) {
-      emit(AuthSighIn());
+      emit(const AuthSighIn());
     }
   }
 

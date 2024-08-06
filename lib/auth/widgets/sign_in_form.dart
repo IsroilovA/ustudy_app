@@ -78,7 +78,7 @@ class _SignInFormState extends State<SignInForm> {
               validator: (value) {
                 if (value == null ||
                     value.trim().isEmpty ||
-                    value.contains(RegExp(r'^[0-9+\-()\s]+$'))) {
+                    !value.contains(RegExp(r'^[0-9+\-()\s]+$'))) {
                   return 'Введи корректный номер телефона';
                 }
                 return null;
@@ -150,6 +150,9 @@ class _SignInFormState extends State<SignInForm> {
                 labelText: 'Введите пароль',
               ),
               obscureText: true,
+              onChanged: (value) {
+                _enteredPassword = value;
+              },
               onSaved: (value) {
                 _enteredPassword = value!;
               },
@@ -170,6 +173,7 @@ class _SignInFormState extends State<SignInForm> {
                 labelText: 'Введите пароль',
               ),
               obscureText: true,
+              onSaved: (value) {},
             ),
             const SizedBox(height: 30),
             Center(
