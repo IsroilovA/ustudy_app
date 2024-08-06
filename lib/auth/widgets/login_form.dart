@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:ustudy_app/auth/cubit/auth_cubit.dart';
+import 'package:ustudy_app/services/utils.dart';
 
 class LoginForm extends StatefulWidget {
   const LoginForm({super.key});
@@ -14,10 +17,16 @@ class _LoginFormState extends State<LoginForm> {
     return Form(
         key: _form,
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text("Номер телефона"),
+            Text(
+              "Номер телефона",
+              style: Theme.of(context).textTheme.titleMedium,
+            ),
             TextFormField(
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
+                border: customOutileBorder,
                 labelText: 'Введите номер',
               ),
               keyboardType: TextInputType.phone,
@@ -33,7 +42,10 @@ class _LoginFormState extends State<LoginForm> {
               },
               onSaved: (value) {},
             ),
-            const Text("Пароль"),
+            Text(
+              "Пароль",
+              style: Theme.of(context).textTheme.titleMedium,
+            ),
             TextFormField(
               validator: (value) {
                 if (value == null || value.trim().length < 6) {
@@ -41,19 +53,36 @@ class _LoginFormState extends State<LoginForm> {
                 }
                 return null;
               },
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
+                border: customOutileBorder,
                 labelText: 'Введите пароль',
               ),
               obscureText: true,
               onSaved: (value) {},
             ),
-            const SizedBox(height: 15),
-            TextButton(onPressed: () {}, child: const Text("Войти")),
+            const SizedBox(height: 30),
+            Center(
+                child: TextButton(
+                    onPressed: () {},
+                    child: Text(
+                      "Войти",
+                      style: Theme.of(context).textTheme.titleMedium,
+                    ))),
             const SizedBox(height: 15),
             Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const Text("Еще не зраегстрированы?"),
-                TextButton(onPressed: (){}, child: const Text("Регистрация"))
+                TextButton(
+                    onPressed: () {
+                      BlocProvider.of<AuthCubit>(context).changeMod();
+                    },
+                    child: const Text("Регистрация",
+                        style: TextStyle(
+                          color: Colors.red,
+                          decorationColor: Colors.red,
+                          decoration: TextDecoration.underline,
+                        )))
               ],
             )
           ],

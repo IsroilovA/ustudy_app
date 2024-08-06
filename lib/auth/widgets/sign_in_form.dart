@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ustudy_app/services/utils.dart';
 
 class SignInForm extends StatefulWidget {
   const SignInForm({super.key});
@@ -9,15 +10,33 @@ class SignInForm extends StatefulWidget {
 
 class _SignInFormState extends State<SignInForm> {
   final _form = GlobalKey<FormState>();
+  // Initial Selected Value
+  String dropdownvalue = '';
+
+  // List of items in our dropdown menu
+  var items = [
+    '',
+    'Школьник',
+    'Студент',
+    'Родитель',
+    'Учитель',
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Form(
         key: _form,
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text("Имя"),
+            Text(
+              "Имя",
+              style: Theme.of(context).textTheme.titleMedium,
+            ),
             TextFormField(
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
+                border: customOutileBorder,
                 labelText: 'Введите имя',
               ),
               autocorrect: false,
@@ -30,9 +49,13 @@ class _SignInFormState extends State<SignInForm> {
               },
               onSaved: (value) {},
             ),
-            const Text("Номер телефона"),
+            Text(
+              "Номер телефона",
+              style: Theme.of(context).textTheme.titleMedium,
+            ),
             TextFormField(
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
+                border: customOutileBorder,
                 labelText: 'Введите номер',
               ),
               keyboardType: TextInputType.phone,
@@ -48,9 +71,13 @@ class _SignInFormState extends State<SignInForm> {
               },
               onSaved: (value) {},
             ),
-            const Text("Email"),
+            Text(
+              "Email",
+              style: Theme.of(context).textTheme.titleMedium,
+            ),
             TextFormField(
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
+                border: customOutileBorder,
                 labelText: 'Введите почту',
               ),
               keyboardType: TextInputType.emailAddress,
@@ -66,18 +93,32 @@ class _SignInFormState extends State<SignInForm> {
               },
               onSaved: (value) {},
             ),
-            const Text("Выберите"),
+            Text(
+              "Выберите",
+              style: Theme.of(context).textTheme.titleMedium,
+            ),
             DropdownButtonFormField(
-              items: const [
-                DropdownMenuItem(child: Text("Школьник")),
-                DropdownMenuItem(child: Text("Студент")),
-                DropdownMenuItem(child: Text("Родитель")),
-                DropdownMenuItem(child: Text("Учитель")),
-              ],
-              onChanged: (value) {},
+              decoration: InputDecoration(
+                border: customOutileBorder,
+              ),
+              value: dropdownvalue,
+              items: items.map((String items) {
+                return DropdownMenuItem(
+                  value: items,
+                  child: Text(items),
+                );
+              }).toList(),
+              onChanged: (value) {
+                setState(() {
+                  dropdownvalue = value!;
+                });
+              },
               onSaved: (value) {},
             ),
-            const Text("Пароль"),
+            Text(
+              "Пароль",
+              style: Theme.of(context).textTheme.titleMedium,
+            ),
             TextFormField(
               validator: (value) {
                 if (value == null || value.trim().length < 6) {
@@ -85,13 +126,17 @@ class _SignInFormState extends State<SignInForm> {
                 }
                 return null;
               },
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
+                border: customOutileBorder,
                 labelText: 'Введите пароль',
               ),
               obscureText: true,
               onSaved: (value) {},
             ),
-            const Text("Повторите пароль"),
+            Text(
+              "Повторите пароль",
+              style: Theme.of(context).textTheme.titleMedium,
+            ),
             TextFormField(
               validator: (value) {
                 if (value == null || value.trim().length < 6) {
@@ -99,21 +144,21 @@ class _SignInFormState extends State<SignInForm> {
                 }
                 return null;
               },
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
+                border: customOutileBorder,
                 labelText: 'Введите пароль',
               ),
               obscureText: true,
               onSaved: (value) {},
             ),
-            const SizedBox(height: 15),
-            TextButton(onPressed: () {}, child: const Text("Войти")),
-            const SizedBox(height: 15),
-            Row(
-              children: [
-                const Text("Еще не зраегстрированы?"),
-                TextButton(onPressed: () {}, child: const Text("Регистрация"))
-              ],
-            )
+            const SizedBox(height: 30),
+            Center(
+                child: TextButton(
+                    onPressed: () {},
+                    child: Text(
+                      "Зарегестрироваться",
+                      style: Theme.of(context).textTheme.titleMedium,
+                    ))),
           ],
         ));
   }

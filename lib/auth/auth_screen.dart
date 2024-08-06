@@ -1,40 +1,85 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:ustudy_app/auth/cubit/auth_cubit.dart';
 import 'package:ustudy_app/auth/widgets/login_form.dart';
+import 'package:ustudy_app/auth/widgets/sign_in_form.dart';
 
-class LoginScreen extends StatefulWidget{
-  const LoginScreen({super.key});
+class AuthScreen extends StatefulWidget {
+  const AuthScreen({super.key});
 
   @override
-  State<LoginScreen> createState() {
-    return _LoginScreenState();
+  State<AuthScreen> createState() {
+    return _AuthScreenState();
   }
 }
 
-class _LoginScreenState extends State<LoginScreen>{
-
+class _AuthScreenState extends State<AuthScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        children: [
-          Container(
-                margin: const EdgeInsets.only(
-                  top: 30,
-                  bottom: 20,
-                  left: 20,
-                  right: 20,
-                ),
-                width: 200,
-                child: Image.asset('assets/images/login_image.jpg'),
+      body: Padding(
+        padding: const EdgeInsets.only(bottom: 10.0),
+        child: Column(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Expanded(
+              child: Stack(
+                alignment: Alignment.topCenter,
+                children: [
+                  Image.asset('assets/images/login_image.jpg'),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Card(
+                        margin: const EdgeInsets.all(10),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 30, vertical: 50),
+                          child: BlocBuilder<AuthCubit, AuthState>(
+                            builder: (context, state) {
+                              if (state is AuthLogin) {
+                                return const LoginForm();
+                              } else if (state is AuthSighIn) {
+                                return const SignInForm();
+                              }
+                              return const Text("Something went worng");
+                            },
+                          ),
+                        ),
+                      ),
+                    ],
+                  )
+                ],
               ),
-          const Column(
-            children: [
-              Card(
-                child: LoginForm(),
-              )
-            ],
-          )
-        ],
+            ),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: BlocBuilder<AuthCubit, AuthState>(
+                builder: (context, state) {
+                  return Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(state.isLogin ? "Забыли пароль?" : "Есть аккаунт?"),
+                      TextButton(
+                          onPressed: () {
+                            if (!state.isLogin) {
+                              BlocProvider.of<AuthCubit>(context).changeMod();
+                            }
+                          },
+                          child: Text(state.isLogin ? "Восстановить" : "Войти",
+                              style: const TextStyle(
+                                color: Colors.red,
+                                decorationColor: Colors.red,
+                                decoration: TextDecoration.underline,
+                              )))
+                    ],
+                  );
+                },
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

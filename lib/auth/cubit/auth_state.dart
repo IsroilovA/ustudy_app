@@ -1,17 +1,24 @@
 part of 'auth_cubit.dart';
 
 @immutable
-sealed class AuthState {}
+sealed class AuthState {
+  final bool isLogin;
+  const AuthState(this.isLogin);
+}
 
-final class AuthInitial extends AuthState {}
+final class AuthLoading extends AuthState {
+  const AuthLoading(super.isLogin);
+}
 
-final class AuthLoading extends AuthState{}
+final class AuthLogin extends AuthState {
+  const AuthLogin() : super(true);
+}
 
-final class AuthLogin extends AuthState{}
+final class AuthSighIn extends AuthState {
+  const AuthSighIn() : super(false);
+}
 
-final class AuthSighIn extends AuthState{}
-
-final class AuthError extends AuthState{
+final class AuthError extends AuthState {
   final String? message;
-  AuthError(this.message);
+  const AuthError(super.isLogin, this.message);
 }
