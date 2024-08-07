@@ -20,8 +20,10 @@ class _LoginFormState extends State<LoginForm> {
       return;
     }
     _form.currentState!.save();
-    BlocProvider.of<AuthCubit>(context)
-        .logIn(phoneNumber: _enteredPhone, password: _enteredPassword);
+    BlocProvider.of<AuthCubit>(context).logIn(
+        phoneNumber: _enteredPhone,
+        password: _enteredPassword,
+        context: context);
   }
 
   @override

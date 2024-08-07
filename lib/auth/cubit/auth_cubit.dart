@@ -1,10 +1,15 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:ustudy_app/auth/cubit/confirmation_code_cubit.dart';
 import 'package:ustudy_app/auth/widgets/email_confirmation.dart';
 import 'package:ustudy_app/auth/widgets/sign_in_form.dart';
+import 'package:ustudy_app/home/cubit/courses_cubit.dart';
+import 'package:ustudy_app/home/home_screen.dart';
+import 'package:ustudy_app/services/locator.dart';
+import 'package:ustudy_app/services/ustudy_repository.dart';
 
 part 'auth_state.dart';
 
@@ -19,13 +24,23 @@ class AuthCubit extends Cubit<AuthState> {
     }
   }
 
-  void logIn({required String phoneNumber, required String password}) async {
+  void logIn(
+      {required String phoneNumber,
+      required String password,
+      required BuildContext context}) async {
     emit(AuthLoading(state.isLogin));
     try {
       //login logic
     } catch (e) {
       emit(AuthError(state.isLogin, e.toString()));
     }
+    Navigator.of(context).pushReplacement(MaterialPageRoute(
+      builder: (context) => BlocProvider(
+        create: (context) =>
+            CoursesCubit(ustudyRepository: locator<UstudyRepository>()),
+        child: const HomeScreen(),
+      ),
+    ));
   }
 
   void signIn({

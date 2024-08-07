@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ustudy_app/auth/auth_screen.dart';
 import 'package:ustudy_app/auth/cubit/auth_cubit.dart';
+import 'package:ustudy_app/services/locator.dart';
 
 // Theme for the light mode
 final lightTheme = ThemeData(
@@ -23,7 +24,9 @@ final darkTheme = ThemeData(
   ),
 );
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await initialiseLocator();
   runApp(const App());
 }
 
