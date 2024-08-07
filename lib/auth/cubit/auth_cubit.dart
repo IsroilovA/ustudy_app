@@ -6,8 +6,8 @@ import 'package:meta/meta.dart';
 import 'package:ustudy_app/auth/cubit/confirmation_code_cubit.dart';
 import 'package:ustudy_app/auth/widgets/email_confirmation.dart';
 import 'package:ustudy_app/auth/widgets/sign_in_form.dart';
-import 'package:ustudy_app/home/cubit/courses_cubit.dart';
-import 'package:ustudy_app/home/home_screen.dart';
+import 'package:ustudy_app/courses_list/cubit/courses_cubit.dart';
+import 'package:ustudy_app/courses_list/courses_list_screen.dart';
 import 'package:ustudy_app/services/locator.dart';
 import 'package:ustudy_app/services/ustudy_repository.dart';
 

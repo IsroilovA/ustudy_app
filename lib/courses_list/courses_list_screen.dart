@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:ustudy_app/home/cubit/courses_cubit.dart';
-import 'package:ustudy_app/home/widgets/course_item.dart';
+import 'package:ustudy_app/courses_list/cubit/courses_cubit.dart';
+import 'package:ustudy_app/courses_list/widgets/course_item.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -14,11 +14,16 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        elevation: 1,
+        title: const Text("Курсы"),
+        centerTitle: false,
+      ),
       body: Column(
         children: [
           Text(
             "Бесплатные курсы",
-            style: Theme.of(context).textTheme.labelLarge,
+            style: Theme.of(context).textTheme.headlineSmall,
           ),
           BlocBuilder<CoursesCubit, CoursesState>(
             builder: (context, state) {
@@ -26,11 +31,12 @@ class _HomeScreenState extends State<HomeScreen> {
                 BlocProvider.of<CoursesCubit>(context).loadCourses();
               } else if (state is CoursesLoaded) {
                 return GridView.builder(
+                  shrinkWrap: true,
+                  itemCount: state.courses.length,
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    mainAxisSpacing: 4,
-                    crossAxisSpacing: 4,
+                    mainAxisSpacing: 2,
+                    crossAxisSpacing: 2,
                     crossAxisCount: 2,
-                    childAspectRatio: 2,
                   ),
                   itemBuilder: (context, index) {
                     return CourseItem(

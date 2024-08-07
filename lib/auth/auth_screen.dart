@@ -37,6 +37,12 @@ class _AuthScreenState extends State<AuthScreen> {
                           padding: const EdgeInsets.symmetric(
                               horizontal: 30, vertical: 50),
                           child: BlocBuilder<AuthCubit, AuthState>(
+                            buildWhen: (previous, current) {
+                              if (current is AuthLoading) {
+                                return false;
+                              }
+                              return true;
+                            },
                             builder: (context, state) {
                               if (state is AuthLogin) {
                                 return const LoginForm();

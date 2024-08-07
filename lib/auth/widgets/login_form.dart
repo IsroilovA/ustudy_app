@@ -49,7 +49,7 @@ class _LoginFormState extends State<LoginForm> {
               validator: (value) {
                 if (value == null ||
                     value.trim().isEmpty ||
-                    value.contains(RegExp(r'^[0-9+\-()\s]+$'))) {
+                    !value.contains(RegExp(r'^[0-9+\-()\s]+$'))) {
                   return 'Введи корректный номер телефона';
                 }
                 return null;
@@ -80,14 +80,15 @@ class _LoginFormState extends State<LoginForm> {
             ),
             const SizedBox(height: 30),
             Center(
-                child: TextButton(
-                    onPressed: _submit,
-                    child: Text(
-                      "Войти",
-                      style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                            fontSize: 20,
-                          ),
-                    ))),
+              child: TextButton(
+                  onPressed: _submit,
+                  child: Text(
+                    "Войти",
+                    style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                          fontSize: 20,
+                        ),
+                  )),
+            ),
             const SizedBox(height: 15),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
