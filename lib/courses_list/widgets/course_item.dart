@@ -1,10 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:ustudy_app/data/models/course.dart';
 
-class CourseItem extends StatelessWidget {
+class CourseItem extends StatefulWidget {
   const CourseItem({super.key, required this.course});
 
   final Course course;
+
+  @override
+  State<CourseItem> createState() => _CourseItemState();
+}
+
+class _CourseItemState extends State<CourseItem> {
+  late bool _isSelected;
+
+  @override
+  void initState() {
+    _isSelected = widget.course.isFavorite;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +29,7 @@ class CourseItem extends StatelessWidget {
               fit: StackFit.expand,
               children: [
                 Image.network(
-                  course.imageUrl,
+                  widget.course.imageUrl,
                   fit: BoxFit.fill,
                 ),
                 Padding(
@@ -25,13 +38,16 @@ class CourseItem extends StatelessWidget {
                       alignment: Alignment.topRight,
                       child: CircleAvatar(
                         child: IconButton(
-                          onPressed: () {},
-                          icon: Icon(
-                            course.isFavorite
-                                ? Icons.favorite
-                                : Icons.favorite_outline_outlined,
-                            color: Colors.red,
-                          ),
+                          onPressed: () {
+                            //adding to favorites logic
+                            setState(() {
+                              _isSelected = !_isSelected;
+                            });
+                          },
+                          color: Colors.red,
+                          isSelected: _isSelected,
+                          selectedIcon: const Icon(Icons.favorite),
+                          icon: const Icon(Icons.favorite_outline_outlined),
                         ),
                       )),
                 )
@@ -40,7 +56,7 @@ class CourseItem extends StatelessWidget {
           ),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 8),
-            child: Text(course.name),
+            child: Text(widget.course.name),
           )
         ],
       ),
