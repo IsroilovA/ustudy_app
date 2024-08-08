@@ -37,7 +37,7 @@ class _CourseItemState extends State<CourseItem> {
                 children: [
                   Image.network(
                     widget.course.imageUrl,
-                    fit: BoxFit.fill,
+                    fit: BoxFit.cover,
                   ),
                   Padding(
                     padding: const EdgeInsets.all(8),

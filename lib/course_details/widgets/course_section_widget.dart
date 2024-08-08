@@ -17,7 +17,7 @@ class CourseSectionWidget extends StatelessWidget {
             width: size.width,
             child: Image.network(
               courseSection.coverImageUrl,
-              fit: BoxFit.fill,
+              fit: BoxFit.cover,
             ),
           ),
           Padding(

@@ -32,6 +32,7 @@ class _HomeScreenState extends State<HomeScreen> {
               } else if (state is CoursesLoaded) {
                 return GridView.builder(
                   shrinkWrap: true,
+                  padding: const EdgeInsets.all(8),
                   itemCount: state.courses.length,
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     mainAxisSpacing: 2,
