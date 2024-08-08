@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ustudy_app/admin_panel/cubit/admin_panel_cubit.dart';
+import 'package:ustudy_app/admin_panel/widgets/add_edit_course.dart';
 import 'package:ustudy_app/data/models/course.dart';
 
 class AdminCourseItem extends StatelessWidget {
@@ -18,7 +19,9 @@ class AdminCourseItem extends StatelessWidget {
           return [
             PopupMenuItem(
                 child: ListTile(
-              onTap: () {
+              onTap: () async {
+                Scaffold.of(context)
+                    .showBottomSheet((ctx) => AddEditCourse(course: course));
                 Navigator.of(context).pop();
               },
               leading: const Icon(Icons.edit),
