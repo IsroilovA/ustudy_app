@@ -142,7 +142,8 @@ class UstudyRepository {
   }
 
   void addNewCourse(Course course) {
-    mockCoursesJson += ',${jsonEncode(course.toJson())}';
+    mockCoursesJson = mockCoursesJson.replaceRange(
+        mockCoursesJson.length - 1, null, ',${jsonEncode(course.toJson())}]');
   }
 
   void deleteCourse(Course course) {

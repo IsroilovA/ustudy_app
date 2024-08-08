@@ -18,7 +18,9 @@ class AdminCourseItem extends StatelessWidget {
           return [
             PopupMenuItem(
                 child: ListTile(
-              onTap: () {},
+              onTap: () {
+                Navigator.of(context).pop();
+              },
               leading: const Icon(Icons.edit),
               title: const Text("Изменить"),
             )),
@@ -26,6 +28,7 @@ class AdminCourseItem extends StatelessWidget {
                 child: ListTile(
               onTap: () {
                 BlocProvider.of<AdminPanelCubit>(context).deleteCourse(course);
+                Navigator.of(context).pop();
               },
               leading: const Icon(Icons.delete),
               title: const Text("Удалить"),

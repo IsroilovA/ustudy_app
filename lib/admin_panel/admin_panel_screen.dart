@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ustudy_app/admin_panel/cubit/admin_panel_cubit.dart';
 import 'package:ustudy_app/admin_panel/widgets/admin_course_item.dart';
-import 'package:ustudy_app/admin_panel/widgets/new_course.dart';
+import 'package:ustudy_app/admin_panel/widgets/add_edit_course.dart';
 
 class AdminPanelScreen extends StatelessWidget {
   const AdminPanelScreen({super.key});
@@ -26,7 +26,7 @@ class AdminPanelScreen extends StatelessWidget {
                   return IconButton(
                       onPressed: () {
                         Scaffold.of(context)
-                            .showBottomSheet((ctx) => const NewCourse());
+                            .showBottomSheet((ctx) => const AddEditCourse());
                       },
                       icon: const Icon(Icons.add));
                 }

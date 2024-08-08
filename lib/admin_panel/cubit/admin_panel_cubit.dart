@@ -46,8 +46,16 @@ class AdminPanelCubit extends Cubit<AdminPanelState> {
 
   void deleteCourse(Course course) async {
     try {
-      emit(AdminPanelCoursesLoading());
       _ustudyRepository.deleteCourse(course);
+      emit(AdminPanelInitial());
+    } catch (e) {
+      emit(AdminPanelError(e.toString()));
+    }
+  }
+
+  void addCourse(Course course) async {
+    try {
+      _ustudyRepository.addNewCourse(course);
       emit(AdminPanelInitial());
     } catch (e) {
       emit(AdminPanelError(e.toString()));

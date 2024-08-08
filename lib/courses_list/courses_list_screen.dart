@@ -25,8 +25,8 @@ class _HomeScreenState extends State<HomeScreen> {
         actions: [
           if (context.select((CoursesCubit cubit) => cubit.state.isAdmin))
             IconButton(
-                onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(
+                onPressed: () async {
+                  await Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) => BlocProvider(
                       create: (context) => AdminPanelCubit(
                         ustudyRepository: locator<UstudyRepository>(),
@@ -34,6 +34,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: const AdminPanelScreen(),
                     ),
                   ));
+                  if (context.mounted) {
+                    BlocProvider.of<CoursesCubit>(context).loadCourses();
+                  }
                 },
                 icon: const Icon(Icons.admin_panel_settings))
         ],
