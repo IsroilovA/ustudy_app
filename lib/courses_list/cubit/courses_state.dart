@@ -1,21 +1,30 @@
 part of 'courses_cubit.dart';
 
 @immutable
-sealed class CoursesState {}
+sealed class CoursesState {
+  final bool isAdmin;
+  const CoursesState({required this.isAdmin});
+}
 
-final class CoursesInitial extends CoursesState {}
+final class CoursesInitial extends CoursesState {
+  const CoursesInitial({required super.isAdmin});
+}
 
 final class CoursesLoaded extends CoursesState {
   final List<Course> courses;
 
-  CoursesLoaded(this.courses);
+  const CoursesLoaded(this.courses, {required super.isAdmin});
 }
 
-final class CoursesLoading extends CoursesState {}
+final class CoursesLoading extends CoursesState {
+  const CoursesLoading({required super.isAdmin});
+}
 
-final class NoCourses extends CoursesState {}
+final class NoCourses extends CoursesState {
+  const NoCourses({required super.isAdmin});
+}
 
 final class CoursesError extends CoursesState {
   final String? message;
-  CoursesError(this.message);
+  const CoursesError(this.message, {required super.isAdmin});
 }

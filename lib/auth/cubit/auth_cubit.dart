@@ -29,15 +29,19 @@ class AuthCubit extends Cubit<AuthState> {
       required String password,
       required BuildContext context}) async {
     emit(AuthLoading(state.isLogin));
+    bool isAdmin = false;
     try {
       //login logic
+      if (password == "ustudyadmin") {
+        isAdmin = true;
+      }
     } catch (e) {
       emit(AuthError(state.isLogin, e.toString()));
     }
     Navigator.of(context).pushReplacement(MaterialPageRoute(
       builder: (context) => BlocProvider(
-        create: (context) =>
-            CoursesCubit(ustudyRepository: locator<UstudyRepository>()),
+        create: (context) => CoursesCubit(
+            ustudyRepository: locator<UstudyRepository>(), isAdmin: isAdmin),
         child: const HomeScreen(),
       ),
     ));

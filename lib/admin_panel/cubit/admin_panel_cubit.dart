@@ -3,27 +3,26 @@ import 'package:meta/meta.dart';
 import 'package:ustudy_app/data/models/course.dart';
 import 'package:ustudy_app/services/ustudy_repository.dart';
 
-part 'courses_state.dart';
+part 'admin_panel_state.dart';
 
-class CoursesCubit extends Cubit<CoursesState> {
-  CoursesCubit(
-      {required UstudyRepository ustudyRepository, required bool isAdmin})
+class AdminPanelCubit extends Cubit<AdminPanelState> {
+  AdminPanelCubit({required UstudyRepository ustudyRepository})
       : _ustudyRepository = ustudyRepository,
-        super(CoursesInitial(isAdmin: isAdmin));
+        super(AdminPanelInitial());
 
   final UstudyRepository _ustudyRepository;
 
   void loadCourses() async {
-    emit(CoursesLoading(isAdmin: state.isAdmin));
+    emit(AdminPanelCoursesLoading());
     try {
       var courses = await _ustudyRepository.getCourses();
       if (courses.isEmpty) {
-        emit(NoCourses(isAdmin: state.isAdmin));
+        emit(AdminPanelNoCourses());
       } else {
-        emit(CoursesLoaded(courses, isAdmin: state.isAdmin));
+        emit(AdminPanelCoursesLoaded(courses));
       }
     } catch (e) {
-      emit(CoursesError(e.toString(), isAdmin: state.isAdmin));
+      emit(AdminPanelError(e.toString()));
     }
   }
 }
