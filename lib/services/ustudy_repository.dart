@@ -3,7 +3,7 @@ import 'dart:convert';
 // import 'package:http/http.dart' as http;
 import 'package:ustudy_app/data/models/course.dart';
 
-final String mockCoursesJson = jsonEncode([
+String mockCoursesJson = jsonEncode([
   {
     "id": "course-123",
     "name": "Introduction to Flutter",
@@ -139,5 +139,14 @@ class UstudyRepository {
       ),
     );
     return posts.toList();
+  }
+
+  void addNewCourse(Course course) {
+    mockCoursesJson += ',${jsonEncode(course.toJson())}';
+  }
+
+  void deleteCourse(Course course) {
+    mockCoursesJson =
+        mockCoursesJson.replaceAll('${jsonEncode(course.toJson())},', '');
   }
 }

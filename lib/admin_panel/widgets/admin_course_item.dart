@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:ustudy_app/admin_panel/cubit/admin_panel_cubit.dart';
 import 'package:ustudy_app/data/models/course.dart';
 
 class AdminCourseItem extends StatelessWidget {
@@ -22,7 +24,9 @@ class AdminCourseItem extends StatelessWidget {
             )),
             PopupMenuItem(
                 child: ListTile(
-              onTap: () {},
+              onTap: () {
+                BlocProvider.of<AdminPanelCubit>(context).deleteCourse(course);
+              },
               leading: const Icon(Icons.delete),
               title: const Text("Удалить"),
             )),

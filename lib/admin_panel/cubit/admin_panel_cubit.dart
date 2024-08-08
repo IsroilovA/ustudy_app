@@ -1,4 +1,8 @@
+import 'dart:io';
+
 import 'package:bloc/bloc.dart';
+import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:meta/meta.dart';
 import 'package:ustudy_app/data/models/course.dart';
 import 'package:ustudy_app/services/ustudy_repository.dart';
@@ -21,6 +25,30 @@ class AdminPanelCubit extends Cubit<AdminPanelState> {
       } else {
         emit(AdminPanelCoursesLoaded(courses));
       }
+    } catch (e) {
+      emit(AdminPanelError(e.toString()));
+    }
+  }
+
+  void pickImage(
+      {required BuildContext context,
+      required void Function(File pickedImage) onPickImage}) async {
+    final pickedImage = await ImagePicker().pickImage(
+      source: ImageSource.gallery,
+      imageQuality: 70,
+      maxWidth: 400,
+    );
+    if (pickedImage == null) {
+      return null;
+    }
+    onPickImage(File(pickedImage.path));
+  }
+
+  void deleteCourse(Course course) async {
+    try {
+      emit(AdminPanelCoursesLoading());
+      _ustudyRepository.deleteCourse(course);
+      emit(AdminPanelInitial());
     } catch (e) {
       emit(AdminPanelError(e.toString()));
     }
