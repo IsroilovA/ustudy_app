@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:meta/meta.dart';
 import 'package:ustudy_app/data/models/course.dart';
 import 'package:ustudy_app/services/ustudy_repository.dart';
 
