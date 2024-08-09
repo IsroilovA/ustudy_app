@@ -16,6 +16,12 @@ final class CoursesLoaded extends CoursesState {
   const CoursesLoaded(this.courses, {required super.isAdmin});
 }
 
+final class FavoriteCoursesLoaded extends CoursesState {
+  final List<Course> courses;
+
+  const FavoriteCoursesLoaded(this.courses, {required super.isAdmin});
+}
+
 final class CoursesLoading extends CoursesState {
   const CoursesLoading({required super.isAdmin});
 }

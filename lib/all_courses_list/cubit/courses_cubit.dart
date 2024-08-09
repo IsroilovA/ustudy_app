@@ -20,6 +20,13 @@ class CoursesCubit extends Cubit<CoursesState> {
       if (courses.isEmpty) {
         emit(NoCourses(isAdmin: state.isAdmin));
       } else {
+        emit(FavoriteCoursesLoaded(
+            courses
+                .where(
+                  (element) => element.isFavorite == true,
+                )
+                .toList(),
+            isAdmin: state.isAdmin));
         emit(CoursesLoaded(courses, isAdmin: state.isAdmin));
       }
     } catch (e) {

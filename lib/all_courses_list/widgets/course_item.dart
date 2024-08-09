@@ -30,8 +30,9 @@ class _CourseItemState extends State<CourseItem> {
       },
       child: Card(
         child: Column(
+          mainAxisSize: MainAxisSize.min,
           children: [
-            Expanded(
+            Flexible(
               child: Stack(
                 fit: StackFit.expand,
                 children: [
