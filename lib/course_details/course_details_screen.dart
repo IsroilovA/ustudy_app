@@ -12,6 +12,9 @@ class CourseDetailsScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(course.name),
+        actions: [
+          IconButton(onPressed: () {}, icon: const Icon(Icons.download)),
+        ],
       ),
       body: ListView.builder(
         padding: const EdgeInsets.all(8),
